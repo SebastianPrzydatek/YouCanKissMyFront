@@ -1,1 +1,9 @@
+- baza danych (mongodb) (Sebastian)
 
+- logi (morgan), error handler (Artur)
+
+- middleware ?zalogowany? (Krzysiek)
+
+- webpack typescript (Karolina)
+
+- dobre praktyki tslint/editorconfig, tsconfig (Paweł)
