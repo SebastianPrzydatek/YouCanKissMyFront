@@ -1,12 +1,5 @@
-- baza danych (mongodb) (Sebastian) Done
-```
-{
-    "_id": {
-        "$oid": "5ca09c62fd058a2d543c92c9"
-    },
-    "name": "Puszek",
-    "__v": 0
-}
+- baza danych (mongodb) (Sebastian)
+    * Zapisanie do bazy danych kota o nawie Puszek 
 
 - logi (morgan), error handler (Artur)
 
