@@ -54,18 +54,15 @@ db.once('open', function () {
 });
 
 app.get('/', randomRes, (req, res) => {
-  res.send('hello world')
+    res.send(
+    userData.map(user => (
+      'Imie: ' + user.first_name + ', ' +
+      'Nazwisko: ' + user.second_name + ', ' +
+      'Wiek: ' + user.age + ', ' +
+      'Zawód: ' + user.profession + ', ' +
+      'Hobby: ' + user.hobbys
+    ))
+  )
 });
-
-// app.get('/', (request, response) => response
-//   .send(
-//     userData.map(user => (
-//       'Imie: ' + user.first_name + ', ' +
-//       'Nazwisko: ' + user.second_name + ', ' +
-//       'Wiek: ' + user.age + ', ' +
-//       'Zawód: ' + user.profession + ', ' +
-//       'Hobby: ' + user.hobbys
-//     ))
-//   ))
 
 app.listen(3000);
