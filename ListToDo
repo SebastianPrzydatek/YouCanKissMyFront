@@ -1,3 +1,5 @@
+Sprint #1
+
 - baza danych (mongodb) (Sebastian)
     * Zapisanie do bazy danych kota o nawie Puszek 
 
@@ -8,3 +10,10 @@
 - webpack typescript (Karolina)
 
 - dobre praktyki tslint/editorconfig, tsconfig (Paweł)
+
+
+Sprint #2
+
+- uzytkownicy - logowanie, rejestracja (proste api, dodajace userów do bazy oraz drugie - sprawdzająće czy login/haslo poprawne) (Krzysiek)
+- notatki - jak powiazac z userem + kolekcja notatek (Seba)
+- webpack- skompilowanie index.ts (Karolina)
