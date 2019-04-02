@@ -8,64 +8,54 @@ const Schema = mongoose.Schema;
 mongoose.connect('mongodb://seba:Brak123!@ds127376.mlab.com:27376/heroku_59361kcv', { useNewUrlParser: true });
 
 var userSchema = new Schema({
+  _id: Schema.Types.ObjectId,
   first_name: String,
   second_name: String,
-  age: Number,
-  profession: String,
-  hobbys: String,
+  note: [{ type: Schema.Types.ObjectId, ref: 'Note' }],
 })
 
-const saveToDataBase = false
 
+const noteSchema = new Schema({
+  note: String,
+  author: [{ type: Schema.Types.ObjectId, ref: 'Users'  }]
+})
 
 const Users = mongoose.model('Users', userSchema);
+const Note = mongoose.model('Note', noteSchema);
+
 const singleUser = new Users({
+  _id: new mongoose.Types.ObjectId(),
   first_name: 'Adam',
   second_name: 'Drwal',
-  age: 35,
-  profession: 'Programista',
-  hobbys: 'Reducery, statey, rootReducery, tworzenie nowych aplikacji, nienawidzę utrzymywania aplikacji, po co komu długopis skoro mam smartfona i 10 aplikacji do zapisywania',
 });
 
-var userData = [{
-  first_name: '',
-  second_name: '',
-  age: '',
-  profession: '',
-  hobbys: '',
-}]
 
-if (saveToDataBase) {
-  singleUser.save()
-}
+singleUser.save(function (err) {
+  if (err) return handleError(err);
+
+  const story = new Note({
+    note: 'Lorem Ipsum',
+    author: singleUser._id
+  });
+
+  story.save(function (err) {
+    if (err) return handleError(err)
+  })
+})
 
 db.once('open', function () {
-  Users.find({}, function (err, data) {
-    data.map(key => {
-      userData.push({
-        first_name: key.first_name,
-        second_name: key.second_name,
-        age: key.age,
-        profession: key.profession,
-        hobbys: key.hobbys,
-      })
-    })
+  Note.
+  findOne({ note: 'Lorem Ipsum' }).
+  populate('Users').
+  exec(function (err, note) {
+    if (err) return handleError(err);
+    console.log('The author is %s', note);
+    // prints "The author is Ian Fleming"
   });
 });
 
 app.get('/', randomRes, (req, res) => {
-  res.send('hello world')
+    res.send()
 });
-
-// app.get('/', (request, response) => response
-//   .send(
-//     userData.map(user => (
-//       'Imie: ' + user.first_name + ', ' +
-//       'Nazwisko: ' + user.second_name + ', ' +
-//       'Wiek: ' + user.age + ', ' +
-//       'Zawód: ' + user.profession + ', ' +
-//       'Hobby: ' + user.hobbys
-//     ))
-//   ))
 
 app.listen(3000);
