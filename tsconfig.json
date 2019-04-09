@@ -11,6 +11,6 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "experimentalDecorators": true,
-    "lib": ["es2015", "es2016"],
+    "lib": ["es2015", "es2016", "dom"],
   },
 }

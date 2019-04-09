@@ -65,4 +65,28 @@ app.get('/', randomRes, (req, res) => {
   )
 });
 
+app.post('/register', register);
+
+function register(req, res, next) {
+    create(req.body)
+        .then(() => res.json({}))
+        .catch(err => next(err));
+}
+
+async function create(userParam) {
+    if (await User.findOne({ username: userParam.username })) {
+        throw 'Username "' + userParam.username + '" is already taken';
+    }
+
+    const user = new User(userParam);
+
+    if (userParam.password) {
+        user.password = md5(userParam.password);
+    }
+
+
+    await user.save();
+}
+
+
 app.listen(3000);
