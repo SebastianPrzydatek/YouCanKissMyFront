@@ -4,6 +4,7 @@ const jwt = require("jsonwebtoken");
 const { User } = require("../Models/UserModel");
 const express = require("express");
 const router = express.Router();
+const sessions = require('../sessions')
 
 function validate(req) {
     const schema = {
@@ -15,6 +16,7 @@ function validate(req) {
 
 router.post('/', async (req, res) => {
     const { error } = validate(req.body);
+    console.log(req.body)
     if (error) {
         return res.status(400).send(error.details[0].message);
     }
@@ -30,6 +32,9 @@ router.post('/', async (req, res) => {
     }
 
     const token = jwt.sign({ _id: user._id }, 'PrivateKey');
+
+    sessions.set(token, user)
+
     res.send(token);
 });
 

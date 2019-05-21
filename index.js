@@ -8,71 +8,70 @@ const Joi = require('joi');
 Joi.objectId = require('joi-objectid')(Joi);
 const users = require('./Routes/users');
 const auth = require('./Routes/auth');
-
-var db = mongoose.connection;
-const Schema = mongoose.Schema;
-
+const getNotes = require('./Note/getNotes');
+const postNotes = require('./Note/postNote');
 mongoose.connect('mongodb://seba:Brak123!@ds127376.mlab.com:27376/heroku_59361kcv', { useNewUrlParser: true });
+
+// var db = mongoose.connection;
+// const Schema = mongoose.Schema;
+
 
 app.use(bodyParser.json());
 app.use('/api/users', users);
 app.use('/api/auth', auth);
+app.use('/api/notes', randomRes);
+app.use('/api/notes', getNotes);
+app.use('/api/notes', postNotes);
 
-var userSchema = new Schema({
-  first_name: String,
-  second_name: String,
-  age: Number,
-  profession: String,
-  hobbys: String,
-});
+// var userSchema = new Schema({
+//   _id: Schema.Types.ObjectId,
+//   first_name: String,
+//   second_name: String,
+//   note: [{ type: Schema.Types.ObjectId, ref: 'Note' }],
+// })
 
-const saveToDataBase = false
 
-const Users = mongoose.model('Users', userSchema);
-const singleUser = new Users({
-  first_name: 'Adam',
-  second_name: 'Drwal',
-  age: 35,
-  profession: 'Programista',
-  hobbys: 'Reducery, statey, rootReducery, tworzenie nowych aplikacji, nienawidzę utrzymywania aplikacji, po co komu długopis skoro mam smartfona i 10 aplikacji do zapisywania',
-});
+// const noteSchema = new Schema({
+//   note: String,
+//   author: [{ type: Schema.Types.ObjectId, ref: 'Users'  }]
+// })
 
-var userData = [{
-  first_name: '',
-  second_name: '',
-  age: '',
-  profession: '',
-  hobbys: '',
-}]
+// const Users = mongoose.model('Users', userSchema);
+// const Note = mongoose.model('Note', noteSchema);
 
-if (saveToDataBase) {
-  singleUser.save()
-}
+// const singleUser = new Users({
+//   _id: new mongoose.Types.ObjectId(),
+//   first_name: 'Adam',
+//   second_name: 'Drwal',
+// });
 
-db.once('open', function () {
-  Users.find({}, function (err, data) {
-    data.map(key => {
-      userData.push({
-        first_name: key.first_name,
-        second_name: key.second_name,
-        age: key.age,
-        profession: key.profession,
-        hobbys: key.hobbys,
-      })
-    })
-  });
-});
+
+// singleUser.save(function (err) {
+//   if (err) return handleError(err);
+
+//   const story = new Note({
+//     note: 'Lorem Ipsum',
+//     author: singleUser._id
+//   });
+
+//   story.save(function (err) {
+//     if (err) return handleError(err)
+//   })
+// })
+
+// db.once('open', function () {
+//   Note.
+//   findOne({ note: 'Lorem Ipsum' }).
+//   populate('Users').
+//   exec(function (err, note) {
+//     if (err) return handleError(err);
+//     console.log('The author is %s', note);
+//     // prints "The author is Ian Fleming"
+//   });
+// });
 
 app.get('/', randomRes, (req, res) => {
-    res.send(
-    userData.map(user => (
-      'Imie: ' + user.first_name + ', ' +
-      'Nazwisko: ' + user.second_name + ', ' +
-      'Wiek: ' + user.age + ', ' +
-      'Zawód: ' + user.profession + ', ' +
-      'Hobby: ' + user.hobbys
-    ))
-  )
+    res.send()
 });
 
 app.listen(3000);
